@@ -10,7 +10,7 @@ using namespace ariel;
 
 
 // Load the graph and check if it squares also no edge between a vertex to himself
-void Graph::loadGraph(const std::vector<std::vector<int>>& graph) {
+void Graph::loadGraph(const std::vector<std::vector<int>>& graph){
 
     // Check the matrix is square
     for(unsigned int i = 0; i < graph.size(); i++){
@@ -28,7 +28,7 @@ void Graph::loadGraph(const std::vector<std::vector<int>>& graph) {
 }
 
 // Return how many vertex and edge the graph have
-string Graph::printGraph() const {
+string Graph::printGraphEx1() const {
     int edges = 0;
 
     // counting the edges
@@ -81,4 +81,204 @@ vector<unsigned int> Graph::getConnectedVertices(unsigned int vertex) const {
 
     // Return the connected vertexes
     return connectedVertices;
+}
+
+
+/// Project 2 ///
+
+string Graph::printGraph() const {
+    string str = "";
+    for(unsigned  int i = 0; i < matrix.size(); i++){
+        str += "[";
+        for(unsigned  int j = 0; j < matrix.size(); j++){
+            str += to_string(matrix[i][j]) + ", ";
+        }
+
+        // Erase the last 2 chars
+        str.erase(str.size() - 2);
+
+        // In order to make use "\n" won't be at the end
+        if(i != matrix.size() - 1){
+            str += "]\n";
+        }
+        else{
+            str += "]";
+        }
+    }
+    return str;
+}
+
+Graph Graph::operator+(const Graph& other) const {
+
+    // Check if the two graphs have the same size
+    if (matrix.size() != other.matrix.size()) {
+        throw invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
+    }
+
+    // Create a new graph to store the result
+    Graph result;
+    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+
+    // Perform addition per element
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix[i].size(); j++) {
+            result.matrix[i][j] = matrix[i][j] + other.matrix[i][j];
+        }
+    }
+    return result;
+}
+
+Graph& Graph::operator+=(const Graph& other){
+
+    if (matrix.size() != other.matrix.size()) {
+        throw std::invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
+    }
+
+    // Perform addition per element
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix.size(); j++) {
+            matrix[i][j] += other.matrix[i][j];
+        }
+    }
+
+    return *this;
+}
+
+Graph& Graph::operator+() {
+    return *this;
+}
+
+Graph Graph::operator++() const {
+
+    // Create a new graph to store the result
+    Graph result;
+    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+
+    // Perform addition per element
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix[i].size(); j++) {
+            if(matrix[i][j] != 0){
+                result.matrix[i][j] = matrix[i][j] + 1;
+            }
+            else{
+                result.matrix[i][j] = 0;
+            }
+        }
+    }
+    return result;
+}
+
+Graph Graph::operator-(const Graph& other) const {
+
+    // Check if the two graphs have the same size
+    if (matrix.size() != other.matrix.size()) {
+        throw invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
+    }
+
+    // Create a new graph to store the result
+    Graph result;
+    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+
+    // Perform subtraction per element
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix[i].size(); j++) {
+            result.matrix[i][j] = matrix[i][j] - other.matrix[i][j];
+        }
+    }
+    return result;
+}
+
+Graph& Graph::operator-=(const Graph& other){
+
+    if (matrix.size() != other.matrix.size()) {
+        throw std::invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
+    }
+
+    // Perform subtraction per element
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix.size(); j++) {
+            matrix[i][j] -= other.matrix[i][j];
+        }
+    }
+
+    return *this;
+}
+
+Graph& Graph::operator-() {
+
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix.size(); j++) {
+            matrix[i][j] = (-1) * matrix[i][j];
+        }
+    }
+
+    return *this;
+}
+
+Graph Graph::operator--() const {
+
+    // Create a new graph to store the result
+    Graph result;
+    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+
+    // Perform subtraction per element
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix[i].size(); j++) {
+            if(matrix[i][j] != 0){
+                result.matrix[i][j] = matrix[i][j] - 1;
+            }
+            else{
+                result.matrix[i][j] = 0;
+            }
+        }
+    }
+    return result;
+}
+
+Graph& Graph::operator*(int factor){
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix.size(); j++) {
+            matrix[i][j] = matrix[i][j] * factor;
+        }
+    }
+
+    return *this;
+
+}
+
+Graph& Graph::operator/=(int factor){
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = 0; j < matrix.size(); j++) {
+            matrix[i][j] = matrix[i][j] / factor;
+        }
+    }
+
+    return *this;
+}
+
+Graph Graph::operator*=(const Graph& other) const {
+
+    // Check if the two graphs have the same size
+    if (matrix.size() != other.matrix.size()) {
+        throw invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
+    }
+
+    // Create a new graph to store the result
+    Graph result;
+    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = 0; j < matrix.size(); ++j) {
+            for (int k = 0; k < matrix.size(); ++k) {
+                result.matrix[i][j] += matrix[i][k] * other.matrix[k][j];
+            }
+        }
+    }
+
+    return result;
+}
+
+std::ostream& operator<<(std::ostream& os, const Graph& graph) {
+    os << graph.printGraph();
+    return os;
 }

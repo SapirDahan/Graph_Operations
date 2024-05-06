@@ -13,9 +13,10 @@ using namespace std;
 
 namespace ariel{
     class Graph{
-        vector<vector<int>> matrix; // Adjacency matrix representation of the graph
 
     public:
+        vector<vector<int>> matrix; // Adjacency matrix representation of the graph
+
         /**
          * Loads a new graph from an adjacency matrix.
          * @param graph A 2D vector representing an adjacency matrix of the new graph.
@@ -25,7 +26,7 @@ namespace ariel{
         /**
          * @return A string representation of the adjacency matrix.
          */
-        string printGraph() const;
+        string printGraphEx1() const;
 
 
         /// Helper functions ///
@@ -49,5 +50,24 @@ namespace ariel{
          * @return A vector containing indices of all vertices directly connected to the specified vertex.
          */
         vector<unsigned int> getConnectedVertices(unsigned int vertex) const;
-    };
+
+
+        /// Project 2 ///
+        string printGraph() const;
+        Graph operator+(const Graph& other) const;
+        Graph operator++() const;
+        Graph& operator+=(const Graph& other);
+        Graph& operator+();
+        Graph operator-(const Graph& other) const;
+        Graph& operator-=(const Graph& other);
+        Graph& operator-();
+        Graph operator--() const;
+        Graph& operator*(int factor);
+        Graph& operator/=(int factor);
+        Graph operator*=(const Graph& other) const;
+        friend std::ostream& operator<<(std::ostream& os, const Graph& graph);
+        };
+
 }
+
+
