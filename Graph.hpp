@@ -51,6 +51,11 @@ namespace ariel{
          */
         vector<unsigned int> getConnectedVertices(unsigned int vertex) const;
 
+        /**
+         * Transposes the graph by swapping the rows and columns of the adjacency matrix.
+         */
+        void transposeGraph();
+
 
         /// Project 2 ///
         string printGraph() const;
@@ -66,7 +71,14 @@ namespace ariel{
         Graph& operator/=(int factor);
         Graph operator*=(const Graph& other) const;
         friend std::ostream& operator<<(std::ostream& os, const Graph& graph);
-        };
+        bool operator==(const Graph& other) const;
+        bool operator!=(const Graph& other) const;
+        bool operator<(const Graph& other) const;
+        bool operator<=(const Graph& other) const;
+        bool operator>(const Graph& other) const;
+        bool operator>=(const Graph& other) const;
+
+    };
 
 }
 

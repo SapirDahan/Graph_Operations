@@ -83,6 +83,19 @@ vector<unsigned int> Graph::getConnectedVertices(unsigned int vertex) const {
     return connectedVertices;
 }
 
+// Transpose the vertices of the graph
+void Graph::transposeGraph() {
+    for (size_t i = 0; i < matrix.size(); i++) {
+        for (size_t j = i + 1; j < matrix.size(); j++) {
+
+            // Swap elements at position (i, j) and (j, i)
+            int temp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = temp;
+        }
+    }
+}
+
 
 /// Project 2 ///
 
@@ -267,9 +280,9 @@ Graph Graph::operator*=(const Graph& other) const {
     Graph result;
     result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
 
-    for (int i = 0; i < matrix.size(); ++i) {
-        for (int j = 0; j < matrix.size(); ++j) {
-            for (int k = 0; k < matrix.size(); ++k) {
+    for (unsigned int i = 0; i < matrix.size(); ++i) {
+        for (unsigned int j = 0; j < matrix.size(); ++j) {
+            for (unsigned int k = 0; k < matrix.size(); ++k) {
                 result.matrix[i][j] += matrix[i][k] * other.matrix[k][j];
             }
         }
@@ -281,4 +294,53 @@ Graph Graph::operator*=(const Graph& other) const {
 std::ostream& operator<<(std::ostream& os, const Graph& graph) {
     os << graph.printGraph();
     return os;
+}
+
+bool Graph::operator==(const Graph& other) const{
+    if(size() != other.size()){
+        return false;
+    }
+
+    for(unsigned int i = 0; i < size(); i++){
+        for(unsigned int j = 0; j < size(); j++){
+            if(getEdge(i, j) != other.getEdge(i, j)){
+                return false;
+            }
+        }
+    }
+
+    return true;
+
+}
+bool Graph::operator!=(const Graph& other) const{
+    if(*this == other){
+        return false;
+    }
+    return true;
+
+}
+
+bool Graph::operator<(const Graph& other) const{
+
+}
+
+bool Graph::operator<=(const Graph& other) const{
+    if(*this == other || *this < other){
+        return true;
+    }
+    return false;
+}
+
+bool Graph::operator>(const Graph& other) const{
+    if(other < *this){
+        return true;
+    }
+    return false;
+}
+
+bool Graph::operator>=(const Graph& other) const{
+    if(*this > other || *this == other){
+        return true;
+    }
+    return false;
 }

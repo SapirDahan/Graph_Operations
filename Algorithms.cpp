@@ -15,32 +15,41 @@ using namespace ariel;
 
 
 // Checking if the graph is strongly connected
-bool Algorithms::isConnected(const Graph& graph) {
+bool Algorithms::isConnected(Graph& graph) {
 
-    const unsigned int graphSize = graph.size(); // Size of the graph
+    // Visited vertices
+    vector<bool> visited(graph.size(), false);
 
-    // A vector that save who we visited
-    vector<bool> visited(graphSize, false);
+    // Call DFS function
+    DFS(graph, 0, visited);
 
-    // Going over all combinations of paths
-    for(unsigned int i = 0; i < graphSize; i++) {
-        for(unsigned int j = 0; j < graphSize; j++) {
-
-            // We don't need to check if a vertex have a path to himself
-            if(i != j) {
-
-                // If there is no path return false because the graph is not strongly connected
-                if(!hasPath(graph, i , j, visited)) {
-                    return false;
-                }
-
-                // Refill the visited vector with false for the next round
-                visited.assign(graphSize, false);
-            }
+    // Check if all vertices was visited
+    for (bool v : visited) {
+        if (!v){
+            return false; // Not all vertices were visited
         }
     }
 
-    // All paths exist, therefore, our graph is strongly connected
+    //Transpose the graph
+    graph.transposeGraph();
+
+    //Perform DFS on the transposed graph from the first vertex
+    fill(visited.begin(), visited.end(), false); // Reset visited array
+
+    // Call DFS function
+    DFS(graph, 0, visited);
+
+    // Transpose to the original form
+    graph.transposeGraph();
+
+    // Check if all vertices was visited
+    for (bool v : visited) {
+        if (!v){
+            return false; // Not all vertices were visited in the transposed graph
+        }
+    }
+
+    // If all vertices were visited in both original and transposed graphs, it's strongly connected
     return true;
 }
 
@@ -87,8 +96,8 @@ string Algorithms::shortestPath(const Graph& graph, const unsigned int start, co
     for (unsigned int j = 0; j < numVertices; j++) {
         for (unsigned int k = 0; k < numVertices; k++) {
 
-                // Checking if edge exist
-                if(graph.getEdge(j,k) != 0) {
+            // Checking if edge exist
+            if(graph.getEdge(j,k) != 0) {
 
                 // Checking if we can relax one more time
                 if (distance[j] != INT_MAX && distance[j] + graph.getEdge(j,k) < distance[k]) {
@@ -209,33 +218,22 @@ string Algorithms::negativeCycle(const Graph& graph) {
 
 /////// Help functions ///////
 
-// Help recursive function to find out if 2 vertex have a path
-bool Algorithms::hasPath(const Graph& graph, unsigned int start, unsigned int end, std::vector<bool>& visited) {
+// DFS function to check if all vertices are reachable from a vertex
+void Algorithms::DFS(const Graph& graph, unsigned int v, vector<bool>& visited) {
 
-    // Mark the current vertex as visited
-    visited[start] = true;
+    // We visited that vertex
+    visited[v] = true;
 
-    // Base case: If we reach the destination vertex, return true
-    if (start == end) {
-        return true;
-    }
+    // Go over all the connected vertices
+    for (unsigned int i : graph.getConnectedVertices(v)) {
 
-    // Recursive step: Explore all adjacent vertices of the start vertex
-    const vector<unsigned int>& edges = graph.getConnectedVertices(start);
+        // If we hadn't visited that vertex
+        if (!visited[i]) {
 
-    // Going over all the edges
-    for (unsigned int adjacentVertex : edges) {
-
-        // Recursively call hasPath for unvisited adjacent vertices
-        if (!visited[adjacentVertex]) {
-            if (hasPath(graph, adjacentVertex, end, visited)) {
-                return true; // If a path is found, return true
-            }
+            // Recursive call
+            DFS(graph, i, visited);
         }
     }
-
-    // If we reach here, there is no path from start vertex to end vertex
-    return false;
 }
 
 // Help function that go recursively over the graph to detect cycle
@@ -254,7 +252,7 @@ bool Algorithms::DFSForDetectingCycles(const unsigned int node, unsigned int par
             }
         }
 
-        // We found a cycle which is not get 2 vertexes
+            // We found a cycle which is not get 2 vertexes
         else if (nextNode != parentNode) {
 
             unsigned int current = node;
@@ -313,7 +311,7 @@ bool Algorithms::BFSForBipartite(const Graph& graph, const unsigned int start, v
         B.insert(start);
     }
 
-    // We will color the start vertex 1 otherwise
+        // We will color the start vertex 1 otherwise
     else {
         color[start] = 1; // Assign the first color
         A.insert(start);
@@ -349,7 +347,7 @@ bool Algorithms::BFSForBipartite(const Graph& graph, const unsigned int start, v
                 q.push(nextVertex);
             }
 
-            // If the next vertex have the same color of the current vertex then it is not 2 colorable
+                // If the next vertex have the same color of the current vertex then it is not 2 colorable
             else if (color[nextVertex] == color[currVertex]) {
                 return false; // Not bipartite
             }
@@ -403,4 +401,3 @@ unsigned int Algorithms::countOccurrences(const std::string& str, char target) {
 
     return count;
 }
-

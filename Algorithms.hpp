@@ -20,7 +20,7 @@ namespace ariel {
          * @param graph The graph to check.
          * @return True if the graph is strongly connected, false otherwise.
          */
-        static bool isConnected(const Graph& graph);
+        static bool isConnected(Graph& graph);
 
         /**
          * Finds the shortest path between two vertices using the Bellman-Ford algorithm.
@@ -53,15 +53,15 @@ namespace ariel {
         static string negativeCycle(const Graph& graph);
 
     private:
+
         /**
-         * Helper function to check if there is a path between two vertices.
-         * @param graph The graph to analyze.
-         * @param start The starting vertex index.
-         * @param end The ending vertex index.
-         * @param visited A reference to a vector indicating if a vertex has been visited.
-         * @return True if a path exists, false otherwise.
+         * Depth-First Search (DFS) function to traverse the graph starting from a specific vertex.
+         *
+         * @param graph The graph to perform DFS on.
+         * @param v The current vertex being visited.
+         * @param visited A reference to a vector indicating if a vertex has been visited during the traversal.
          */
-        static bool hasPath(const Graph& graph, unsigned int start, unsigned int end, vector<bool>& visited);
+        static void DFS(const Graph& graph, unsigned int v, vector<bool>& visited);
 
         /**
          * Performs depth-first search (DFS) to detect cycles in the graph.
