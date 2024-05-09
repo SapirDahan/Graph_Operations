@@ -260,6 +260,11 @@ Graph& Graph::operator*(int factor){
 }
 
 Graph& Graph::operator/=(int factor){
+
+    if(factor == 0){
+        throw std::invalid_argument("Invalid operation: dividing by 0 is not allowed.");
+
+    }
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix.size(); j++) {
             matrix[i][j] = matrix[i][j] / factor;
@@ -286,6 +291,10 @@ Graph Graph::operator*=(const Graph& other) const {
                 result.matrix[i][j] += matrix[i][k] * other.matrix[k][j];
             }
         }
+    }
+
+    for(unsigned int i = 0; i < size(); i++){
+        result.matrix[i][i] = 0;
     }
 
     return result;
@@ -322,6 +331,40 @@ bool Graph::operator!=(const Graph& other) const{
 
 bool Graph::operator<(const Graph& other) const{
 
+    // If the other graph has fewer vertices, it cannot be larger than the current graph
+    if(size() > other.size()){
+        return false;
+    }
+
+    // If the other graph has fewer edges, it cannot be larger than the current graph
+    if(countEdges() >= other.countEdges()){
+        return false;
+    }
+
+    vector<vector<unsigned int>> combinations = getAllCombinations(size(), other.size());
+
+    bool flag = true;
+    // Go over all the combinations
+    for (const std::vector<unsigned int>& comb : combinations) {
+        for(unsigned int i = 0; i < size(); i++){
+            for(unsigned int j = 0; j < size(); j++){
+                if(getEdge(i, j) != 0){
+                    if(other.getEdge(comb[i], comb[j]) != getEdge(i, j)){
+                        flag = false;
+                    }
+                }
+            }
+        }
+
+        if(flag){
+            return true;
+        }
+
+        // Reset for the next run
+        flag = true;
+    }
+
+    return false;
 }
 
 bool Graph::operator<=(const Graph& other) const{
@@ -344,3 +387,42 @@ bool Graph::operator>=(const Graph& other) const{
     }
     return false;
 }
+
+/// Help Functions ///
+// Recursive function to generate combinations in ascending order
+void Graph::generateCombinations(vector<vector<unsigned int>>& result, vector<unsigned int>& combination, unsigned int start, unsigned int n, unsigned int m) const{
+    // Base case: when n elements have been chosen
+    if (n == 0) {
+        result.push_back(combination); // Add the current combination to the result
+        return;
+    }
+
+    // Recursive case: choose elements in ascending order
+    for (unsigned int i = start; i <= m - n; i++) {
+        combination.push_back(i); // Include the current element in the combination
+        generateCombinations(result, combination, i + 1, n - 1, m); // Recur with the next element
+        combination.pop_back(); // Backtrack: remove the last element to try other possibilities
+    }
+}
+
+// Function to get all combinations of choosing n elements from a set of size m in ascending order
+vector<vector<unsigned int>> Graph::getAllCombinations(unsigned int n, unsigned int m) const{
+    std::vector<std::vector<unsigned int>> result; // Store all combinations
+    std::vector<unsigned int> combination; // Current combination being built
+    generateCombinations(result, combination, 0, n, m); // Start generating combinations
+    return result;
+}
+
+int Graph::countEdges() const{
+    int counter = 0;
+    for(unsigned int i = 0; i < size(); i++){
+        for(unsigned int j = 0; j < size(); j++){
+            if(getEdge(i, j) != 0){
+                counter++;
+            }
+        }
+    }
+
+    return counter;
+}
+

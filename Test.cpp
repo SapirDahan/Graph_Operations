@@ -52,6 +52,8 @@ TEST_CASE("Test graph addition")
     +g1;
     CHECK(g1.printGraph() == "[0, 3, 2]\n[3, 0, 4]\n[2, 4, 0]");
 
+    g1 < g2;
+
 }
 
 TEST_CASE("Test graph subtraction"){

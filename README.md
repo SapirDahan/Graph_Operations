@@ -5,7 +5,7 @@
 
 
 
-# System 2 Project 1
+# System 2 Project 2
 
 ## Description
 This project implements algorithms for analyzing graphs, including checking for strong connectivity, finding the shortest path using the Bellman-Ford algorithm, detecting cycles, determine if there is a negative cycle, and determining if a graph is bipartite. It provides functionality for both directed and undirected graphs, where an undirected graph is treated as a special case of a directed graph with bidirectional edges.

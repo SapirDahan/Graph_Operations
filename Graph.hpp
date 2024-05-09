@@ -77,8 +77,12 @@ namespace ariel{
         bool operator<=(const Graph& other) const;
         bool operator>(const Graph& other) const;
         bool operator>=(const Graph& other) const;
+        void generateCombinations(vector<vector<unsigned int>>& result, vector<unsigned int>& combination, unsigned int start, unsigned int n, unsigned int m) const;
+        vector<vector<unsigned int>> getAllCombinations(unsigned int n, unsigned int m) const;
+        int countEdges() const;
 
-    };
+
+        };
 
 }
 
