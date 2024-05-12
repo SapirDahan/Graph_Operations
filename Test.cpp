@@ -8,7 +8,6 @@
  */
 
 #include "doctest.h"
-#include "Algorithms.hpp"
 #include "Graph.hpp"
 
 using namespace std;
@@ -30,17 +29,6 @@ TEST_CASE("Test graph addition")
     g2.loadGraph(graph2);
 
     ariel::Graph g3 = g1 + g2;
-
-    ariel::Graph excepted;
-    vector<vector<int>> expectedGraph = {
-            {0, 2, 1},
-            {2, 0, 3},
-            {1, 3, 0}};
-    excepted.loadGraph(expectedGraph);
-
-    CHECK(g3.printGraph() == excepted.printGraph());
-
-
     CHECK(g3.printGraph() == "[0, 2, 1]\n[2, 0, 3]\n[1, 3, 0]");
 
     g1 += g2;
@@ -52,20 +40,125 @@ TEST_CASE("Test graph addition")
     +g1;
     CHECK(g1.printGraph() == "[0, 3, 2]\n[3, 0, 4]\n[2, 4, 0]");
 
-    g1 < g2;
+    ariel::Graph g4;
+    vector<vector<int>> graph4 = {
+            {0, 1, 0, 2},
+            {1, 0, 1, 5},
+            {2, 3, 0, 1},
+            {0, 1, 9, 0}};
+    g4.loadGraph(graph4);
+
+    CHECK_THROWS(g4 + g1);
+    CHECK_THROWS(g1 + g4);
 
 }
 
 TEST_CASE("Test graph subtraction"){
+    ariel::Graph g1;
+    vector<vector<int>> graph1 = {
+            {0, 1, 0},
+            {1, 0, 1},
+            {0, 1, 0}};
+    g1.loadGraph(graph1);
+
+    ariel::Graph g2;
+    vector<vector<int>> graph2 = {
+            {0, 1, 1},
+            {1, 0, 2},
+            {1, 2, 0}};
+    g2.loadGraph(graph2);
+
+    ariel::Graph g3 = g1 - g2;
+    CHECK(g3.printGraph() == "[0, 0, -1]\n[0, 0, -1]\n[-1, -1, 0]");
+
+    g1 -= g2;
+    CHECK(g1.printGraph() == "[0, 0, -1]\n[0, 0, -1]\n[-1, -1, 0]");
+
+    g1 = --g1;
+    CHECK(g1.printGraph() == "[0, 0, -2]\n[0, 0, -2]\n[-2, -2, 0]");
+
+    -g1;
+    CHECK(g1.printGraph() == "[0, 0, 2]\n[0, 0, 2]\n[2, 2, 0]");
+
+    ariel::Graph g4;
+    vector<vector<int>> graph4 = {
+            {0, 1, 0, 2},
+            {1, 0, 1, 5},
+            {2, 3, 0, 1},
+            {0, 1, 9, 0}};
+    g4.loadGraph(graph4);
+
+    CHECK_THROWS(g4 - g1);
+    CHECK_THROWS(g1 - g4);
 
 }
 
 TEST_CASE("Test graph multiplication"){
+    ariel::Graph g1;
+    vector<vector<int>> graph = {
+            {0, 1, 0},
+            {1, 0, 1},
+            {0, 1, 0}};
+    g1.loadGraph(graph);
 
+    ariel::Graph g2;
+    vector<vector<int>> weightedGraph = {
+            {0, 1, 1},
+            {1, 0, 2},
+            {1, 2, 0}};
+    g2.loadGraph(weightedGraph);
+
+    ariel::Graph g3 = g1 * g2;
+
+    CHECK(g3.printGraph() == "[0, 0, 2]\n[1, 0, 1]\n[1, 0, 0]");
+
+    g1*=g2;
+    CHECK(g1.printGraph() == "[0, 0, 2]\n[1, 0, 1]\n[1, 0, 0]");
+
+    ariel::Graph g4;
+    vector<vector<int>> graph4 = {
+            {0, 1, 0, 2},
+            {1, 0, 1, 5},
+            {2, 3, 0, 1},
+            {0, 1, 9, 0}};
+    g4.loadGraph(graph4);
+
+    // Not the same size
+    CHECK_THROWS(g1 * g4);
+    CHECK_THROWS(g4 * g1);
+    CHECK_THROWS(g1 *= g4);
+    CHECK_THROWS(g4 *= g1);
 }
 
-TEST_CASE("Test graph division"){
+TEST_CASE("Test graph division and multiplication by scalar"){
+    ariel::Graph g1;
+    vector<vector<int>> graph1 = {
+            {0, 1, 0, 2},
+            {1, 0, 1, 5},
+            {2, 3, 0, 1},
+            {0, 1, 9, 0}};
+    g1.loadGraph(graph1);
 
+    ariel::Graph g2 = g1 * 3;
+
+    CHECK(g2.printGraph() == "[0, 3, 0, 6]\n[3, 0, 3, 15]\n[6, 9, 0, 3]\n[0, 3, 27, 0]");
+
+    g1 = g2 / 3;
+
+    CHECK(g1.printGraph() == "[0, 1, 0, 2]\n[1, 0, 1, 5]\n[2, 3, 0, 1]\n[0, 1, 9, 0]");
+
+    CHECK_THROWS(g1 = g2 / 0);
+
+    // The same but with /= and *=
+    g1 *= 3;
+
+    CHECK(g1.printGraph() == "[0, 3, 0, 6]\n[3, 0, 3, 15]\n[6, 9, 0, 3]\n[0, 3, 27, 0]");
+
+    g1 /= 3;
+
+    CHECK(g1.printGraph() == "[0, 1, 0, 2]\n[1, 0, 1, 5]\n[2, 3, 0, 1]\n[0, 1, 9, 0]");
+
+    CHECK_THROWS(g1 /= 0);
 }
 
 TEST_CASE("Test graph comparison"){

@@ -67,10 +67,16 @@ namespace ariel{
         Graph& operator-=(const Graph& other);
         Graph& operator-();
         Graph operator--() const;
-        Graph& operator*(int factor);
-        Graph& operator/=(int factor);
-        Graph operator*=(const Graph& other) const;
-        friend std::ostream& operator<<(std::ostream& os, const Graph& graph);
+        Graph operator*(int factor);
+        void operator*=(int factor);
+        Graph operator/(int factor);
+        void operator/=(int factor);
+        Graph operator*(const Graph& other) const;
+        void operator*=(const Graph& other);
+        friend std::ostream& operator<<(std::ostream& os, const Graph& graph){
+            os << graph.printGraph();
+            return os;
+        }
         bool operator==(const Graph& other) const;
         bool operator!=(const Graph& other) const;
         bool operator<(const Graph& other) const;

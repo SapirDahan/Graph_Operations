@@ -248,33 +248,52 @@ Graph Graph::operator--() const {
     return result;
 }
 
-Graph& Graph::operator*(int factor){
+Graph Graph::operator*(int factor){
+
+    // Create a new graph to store the result
+    Graph result;
+    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix.size(); j++) {
-            matrix[i][j] = matrix[i][j] * factor;
+            result.matrix[i][j] = matrix[i][j] * factor;
         }
     }
 
-    return *this;
-
+    return result;
 }
 
-Graph& Graph::operator/=(int factor){
+void Graph::operator*=(int factor){
+    *this = *this * factor;
+}
 
+Graph Graph::operator/(int factor){
     if(factor == 0){
         throw std::invalid_argument("Invalid operation: dividing by 0 is not allowed.");
-
     }
+
+    // Create a new graph to store the result
+    Graph result;
+    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix.size(); j++) {
-            matrix[i][j] = matrix[i][j] / factor;
+            result.matrix[i][j] = matrix[i][j] / factor;
         }
     }
 
-    return *this;
+    return  result;
 }
 
-Graph Graph::operator*=(const Graph& other) const {
+
+void Graph::operator/=(int factor){
+
+    *this = *this / factor;
+}
+
+
+
+Graph Graph::operator*(const Graph& other) const {
 
     // Check if the two graphs have the same size
     if (matrix.size() != other.matrix.size()) {
@@ -300,9 +319,8 @@ Graph Graph::operator*=(const Graph& other) const {
     return result;
 }
 
-std::ostream& operator<<(std::ostream& os, const Graph& graph) {
-    os << graph.printGraph();
-    return os;
+void Graph::operator*=(const Graph& other){
+    *this = *this * other;
 }
 
 bool Graph::operator==(const Graph& other) const{
