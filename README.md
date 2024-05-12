@@ -5,18 +5,10 @@
 
 
 
-# System 2 Project 2
+# System 2 Project 2 - Graph Operations
 
-## Description
-This project implements algorithms for analyzing graphs, including checking for strong connectivity, finding the shortest path using the Bellman-Ford algorithm, detecting cycles, determine if there is a negative cycle, and determining if a graph is bipartite. It provides functionality for both directed and undirected graphs, where an undirected graph is treated as a special case of a directed graph with bidirectional edges.
-
-For instance, this undirected graph:
-
-![Undirected Graph](Images/image1.jpg)
-
-will be treated as:
-
-![Directed Graph](Images/image2.jpg)
+## Project Description
+This C++ project provides a comprehensive set of functions for managing and manipulating graphs represented as adjacency matrices. The functions include capabilities to load graphs, calculate graph metrics, and perform arithmetic and comparison operations on graphs. The functions are designed to handle square matrices as graphs, ensuring no self-edges exist within the graph structure. The library offers a robust set of operations including addition, subtraction, multiplication (both scalar and matrix), division, and various comparison operations to facilitate extensive graph analysis and manipulation.
 
 ---
 
@@ -72,15 +64,85 @@ To clean compiled files, run the command:
 ---
 
 ## Functions
+### Functions From Project 1
 - **Strong Connectivity Check**: Determines if the graph is strongly connected, meaning there is a path between all pairs of vertices. For example, this graph is connected but not strongly connected, thus, the algorithm will return false.
-
-![Conected but not strongly connected](Images/image3.jpg)
-  
 - **Shortest Path Calculation**: Utilizes the Bellman-Ford algorithm to find the shortest path between any two vertices. It will return the path if existed. In addition, if there is a negative cycle in the path the algorithm will output it.
 - **Cycle Detection**: Identifies if the graph contains any cycles. It will return the cycle if existed. For this project, we say there is a cycle in the graph only if it contains at least 3 different vertexes.
 - **Bipartite Verification**: Checks if the graph is bipartite, meaning it can be colored with two colors such that no two adjacent vertices share the same color. If it is, it will return the two groups.
 - **Negative Cycle Detection**: Determining if there a negative cycle in the graph.
 - **Load Graph**: Load a matrix to be a graph object and trows error if the matrix is not square. It will also trow error if there is an edge from a vertex to itself.
 - **Print Graph**: Return how many edges and vertexes a graph have.
+
+### Functions From Project 2 (Operators)
+### Addition (`operator+`)
+
+Performs element-wise addition of two graphs. Both graphs must have the same dimensions.
+
+**Usage:** `Graph result = graph1 + graph2;`
+
+### In-place Addition (`operator+=`)
+
+Performs in-place element-wise addition of the current graph with another graph. Both graphs must have the same dimensions.
+
+**Usage:** `graph1 += graph2;`
+
+### Unary Plus (`operator+`)
+
+Returns a copy of the current graph.
+
+**Usage:** `Graph result = +graph;`
+
+### Increment (`operator++`)
+
+Increments all non-zero elements of the graph by 1.
+
+**Usage:** `++graph;`
+
+### Subtraction (`operator-`)
+
+Performs element-wise subtraction between two graphs. Both graphs must have the same dimensions.
+
+**Usage:** `Graph result = graph1 - graph2;`
+
+### In-place Subtraction (`operator-=`)
+
+Performs in-place element-wise subtraction of another graph from the current graph. Both graphs must have the same dimensions.
+
+**Usage:** `graph1 -= graph2;`
+
+### Unary Minus (`operator-`)
+
+Negates all elements of the graph.
+
+**Usage:** `Graph result = -graph;`
+
+### Decrement (`operator--`)
+
+Decrements all non-zero elements of the graph by 1.
+
+**Usage:** `--graph;`
+
+### Scalar Multiplication (`operator*`)
+
+Multiplies each element of the graph by a scalar value.
+
+**Usage:** `Graph result = graph * factor;`
+
+### Scalar Division (`operator/`)
+
+Divides each element of the graph by a scalar value. Division by zero throws an exception.
+
+**Usage:** `Graph result = graph / factor;`
+
+### Matrix Multiplication (`operator*`)
+
+Performs matrix multiplication between two graphs. Both graphs must have the same dimensions.
+
+**Usage:** `Graph result = graph1 * graph2;`
+
+### Comparison Operators (`operator==`, `operator!=`, `operator<`, `operator<=`, `operator>`, `operator>=`)
+
+Compares two graphs based on their size (number of vertices) and edges. The comparison considers both the structure and the weights of the edges.
+
 
 In addition to the main functionalities mentioned earlier, the project includes several helper functions to support the core algorithms.
