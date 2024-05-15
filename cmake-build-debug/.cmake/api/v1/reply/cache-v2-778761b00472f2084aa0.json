@@ -843,7 +843,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "System2_Project2"
+			"value" : "System2_Project1"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1140,6 +1140,42 @@
 			],
 			"type" : "BOOL",
 			"value" : "FALSE"
+		},
+		{
+			"name" : "System2_Project1_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/parallels/CLionProjects/System2_Project2/cmake-build-debug"
+		},
+		{
+			"name" : "System2_Project1_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "System2_Project1_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/parallels/CLionProjects/System2_Project2"
 		},
 		{
 			"name" : "System2_Project2_BINARY_DIR",

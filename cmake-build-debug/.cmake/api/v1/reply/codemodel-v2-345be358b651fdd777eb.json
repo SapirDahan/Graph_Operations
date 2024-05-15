@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "System2_Project2",
+					"name" : "System2_Project1",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "System2_Project2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-System2_Project2-Debug-f51438f700a01dd3826d.json",
-					"name" : "System2_Project2",
+					"id" : "System2_Project1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-System2_Project1-Debug-07f51198c0e68fdd8358.json",
+					"name" : "System2_Project1",
 					"projectIndex" : 0
 				}
 			]

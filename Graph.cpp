@@ -99,28 +99,7 @@ void Graph::transposeGraph() {
 
 /// Project 2 ///
 
-string Graph::printGraph() const {
-    string str = "";
-    for(unsigned  int i = 0; i < matrix.size(); i++){
-        str += "[";
-        for(unsigned  int j = 0; j < matrix.size(); j++){
-            str += to_string(matrix[i][j]) + ", ";
-        }
-
-        // Erase the last 2 chars
-        str.erase(str.size() - 2);
-
-        // In order to make use "\n" won't be at the end
-        if(i != matrix.size() - 1){
-            str += "]\n";
-        }
-        else{
-            str += "]";
-        }
-    }
-    return str;
-}
-
+// Graph addition
 Graph Graph::operator+(const Graph& other) const {
 
     // Check if the two graphs have the same size
@@ -138,11 +117,15 @@ Graph Graph::operator+(const Graph& other) const {
             result.matrix[i][j] = matrix[i][j] + other.matrix[i][j];
         }
     }
+
+    // Return the result
     return result;
 }
 
-Graph& Graph::operator+=(const Graph& other){
+// In-place Addition
+void Graph::operator+=(const Graph& other){
 
+    // Check if the two graphs have the same size
     if (matrix.size() != other.matrix.size()) {
         throw std::invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
     }
@@ -153,39 +136,33 @@ Graph& Graph::operator+=(const Graph& other){
             matrix[i][j] += other.matrix[i][j];
         }
     }
-
-    return *this;
 }
 
+// Unary Plus
 Graph& Graph::operator+() {
     return *this;
 }
 
-Graph Graph::operator++() const {
-
-    // Create a new graph to store the result
-    Graph result;
-    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+// Increment by 1 for each edge that already exist
+Graph Graph::operator++() {
 
     // Perform addition per element
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix[i].size(); j++) {
             if(matrix[i][j] != 0){
-                result.matrix[i][j] = matrix[i][j] + 1;
-            }
-            else{
-                result.matrix[i][j] = 0;
+                matrix[i][j] = matrix[i][j] + 1;
             }
         }
     }
-    return result;
+    return *this;
 }
 
+// Graph subtraction
 Graph Graph::operator-(const Graph& other) const {
 
     // Check if the two graphs have the same size
     if (matrix.size() != other.matrix.size()) {
-        throw invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
+        throw invalid_argument("Invalid operation: Graphs must have the same dimensions for subtraction.");
     }
 
     // Create a new graph to store the result
@@ -198,13 +175,17 @@ Graph Graph::operator-(const Graph& other) const {
             result.matrix[i][j] = matrix[i][j] - other.matrix[i][j];
         }
     }
+
+    // Return the result
     return result;
 }
 
-Graph& Graph::operator-=(const Graph& other){
+// In-place Subtraction
+void Graph::operator-=(const Graph& other){
 
+    // Check if the two graphs have the same size
     if (matrix.size() != other.matrix.size()) {
-        throw std::invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
+        throw std::invalid_argument("Invalid operation: Graphs must have the same dimensions for subtraction.");
     }
 
     // Perform subtraction per element
@@ -213,12 +194,12 @@ Graph& Graph::operator-=(const Graph& other){
             matrix[i][j] -= other.matrix[i][j];
         }
     }
-
-    return *this;
 }
 
+// Unary Minus
 Graph& Graph::operator-() {
 
+    // Multiply every edge with -1
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix.size(); j++) {
             matrix[i][j] = (-1) * matrix[i][j];
@@ -228,46 +209,51 @@ Graph& Graph::operator-() {
     return *this;
 }
 
-Graph Graph::operator--() const {
-
-    // Create a new graph to store the result
-    Graph result;
-    result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
+// Decrement, Subtract 1 from each edge that already exist
+Graph Graph::operator--() {
 
     // Perform subtraction per element
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix[i].size(); j++) {
             if(matrix[i][j] != 0){
-                result.matrix[i][j] = matrix[i][j] - 1;
-            }
-            else{
-                result.matrix[i][j] = 0;
+                matrix[i][j] = matrix[i][j] - 1;
             }
         }
     }
-    return result;
+
+    // Return the result
+    return *this;
 }
 
-Graph Graph::operator*(int factor){
+
+// Multiply by a factor
+Graph Graph::operator*(int factor) const{
 
     // Create a new graph to store the result
     Graph result;
     result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
 
+    // Multiply by a factor
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix.size(); j++) {
             result.matrix[i][j] = matrix[i][j] * factor;
         }
     }
 
+    // Return the result
     return result;
 }
 
+
+// In palace factor multiply
 void Graph::operator*=(int factor){
     *this = *this * factor;
 }
 
-Graph Graph::operator/(int factor){
+// Factor division
+Graph Graph::operator/(int factor) const{
+
+    // Dividing by 0 is not allowed
     if(factor == 0){
         throw std::invalid_argument("Invalid operation: dividing by 0 is not allowed.");
     }
@@ -276,34 +262,37 @@ Graph Graph::operator/(int factor){
     Graph result;
     result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
 
+    // Divide by the factor
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix.size(); j++) {
             result.matrix[i][j] = matrix[i][j] / factor;
         }
     }
 
+    // Return the result
     return  result;
 }
 
 
+// in place division
 void Graph::operator/=(int factor){
-
     *this = *this / factor;
 }
 
 
-
+// Graph multiplying
 Graph Graph::operator*(const Graph& other) const {
 
     // Check if the two graphs have the same size
     if (matrix.size() != other.matrix.size()) {
-        throw invalid_argument("Invalid operation: Graphs must have the same dimensions for addition.");
+        throw invalid_argument("Invalid operation: Graphs must have the same dimensions for multiplication.");
     }
 
     // Create a new graph to store the result
     Graph result;
     result.matrix.resize(matrix.size(), vector<int>(matrix.size(), 0));
 
+    // Matrix multiplication
     for (unsigned int i = 0; i < matrix.size(); ++i) {
         for (unsigned int j = 0; j < matrix.size(); ++j) {
             for (unsigned int k = 0; k < matrix.size(); ++k) {
@@ -312,41 +301,56 @@ Graph Graph::operator*(const Graph& other) const {
         }
     }
 
+    // Put zeros on the diagonal
     for(unsigned int i = 0; i < size(); i++){
         result.matrix[i][i] = 0;
     }
 
+    // Return the result
     return result;
 }
 
+
+// In palace Graph multiplication
 void Graph::operator*=(const Graph& other){
     *this = *this * other;
 }
 
+// Equals
 bool Graph::operator==(const Graph& other) const{
+
+    // Check the size
     if(size() != other.size()){
+
+        // Not equals
         return false;
     }
 
+    // Check each element
     for(unsigned int i = 0; i < size(); i++){
         for(unsigned int j = 0; j < size(); j++){
             if(getEdge(i, j) != other.getEdge(i, j)){
+
+                // Not equals
                 return false;
             }
         }
     }
 
+    // Equals
     return true;
-
 }
+
+// Not equals
 bool Graph::operator!=(const Graph& other) const{
-    if(*this == other){
-        return false;
-    }
-    return true;
 
+    if(*this == other){
+        return false; // Equals
+    }
+    return true; // Not equals
 }
 
+// Less than
 bool Graph::operator<(const Graph& other) const{
 
     // If the other graph has fewer vertices, it cannot be larger than the current graph
@@ -359,9 +363,11 @@ bool Graph::operator<(const Graph& other) const{
         return false;
     }
 
+    // Get all the combinations of vertexes that can be subgraph
     vector<vector<unsigned int>> combinations = getAllCombinations(size(), other.size());
 
     bool flag = true;
+
     // Go over all the combinations
     for (const std::vector<unsigned int>& comb : combinations) {
         for(unsigned int i = 0; i < size(); i++){
@@ -375,40 +381,53 @@ bool Graph::operator<(const Graph& other) const{
         }
 
         if(flag){
-            return true;
+            return true; // It is subgraph
         }
 
         // Reset for the next run
         flag = true;
     }
 
+    // It not subgraph
     return false;
 }
 
+// Less equal
 bool Graph::operator<=(const Graph& other) const{
+
+    // If less or if equals
     if(*this == other || *this < other){
         return true;
     }
+
     return false;
 }
 
+// Greater than
 bool Graph::operator>(const Graph& other) const{
+
+    // Using <
     if(other < *this){
         return true;
     }
     return false;
 }
 
+// Greater equals
 bool Graph::operator>=(const Graph& other) const{
+
+    // If > or equals
     if(*this > other || *this == other){
         return true;
     }
+
     return false;
 }
 
 /// Help Functions ///
 // Recursive function to generate combinations in ascending order
 void Graph::generateCombinations(vector<vector<unsigned int>>& result, vector<unsigned int>& combination, unsigned int start, unsigned int n, unsigned int m) const{
+
     // Base case: when n elements have been chosen
     if (n == 0) {
         result.push_back(combination); // Add the current combination to the result
@@ -431,6 +450,8 @@ vector<vector<unsigned int>> Graph::getAllCombinations(unsigned int n, unsigned 
     return result;
 }
 
+
+// Count the edges
 int Graph::countEdges() const{
     int counter = 0;
     for(unsigned int i = 0; i < size(); i++){
@@ -441,6 +462,30 @@ int Graph::countEdges() const{
         }
     }
 
+    // Return the counter
     return counter;
+}
+
+// Print the graph
+string Graph::printGraph() const {
+    string str = "";
+    for(unsigned  int i = 0; i < matrix.size(); i++){
+        str += "[";
+        for(unsigned  int j = 0; j < matrix.size(); j++){
+            str += to_string(matrix[i][j]) + ", ";
+        }
+
+        // Erase the last 2 chars
+        str.erase(str.size() - 2);
+
+        // In order to make use "\n" won't be at the end
+        if(i != matrix.size() - 1){
+            str += "]\n";
+        }
+        else{
+            str += "]";
+        }
+    }
+    return str;
 }
 

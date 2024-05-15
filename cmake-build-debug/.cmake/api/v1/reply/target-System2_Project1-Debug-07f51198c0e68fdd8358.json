@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "System2_Project2"
+			"path" : "System2_Project1"
 		}
 	],
 	"backtrace" : 1,
@@ -35,7 +35,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++11 -fdiagnostics-color=always"
+					"fragment" : "-g -fdiagnostics-color=always"
 				}
 			],
 			"language" : "CXX",
@@ -45,7 +45,7 @@
 				[
 					1
 				],
-				"standard" : "11"
+				"standard" : "17"
 			},
 			"sourceIndexes" : 
 			[
@@ -53,7 +53,7 @@
 			]
 		}
 	],
-	"id" : "System2_Project2::@6890427a1f51a3e7e1df",
+	"id" : "System2_Project1::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -69,8 +69,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "System2_Project2",
-	"nameOnDisk" : "System2_Project2",
+	"name" : "System2_Project1",
+	"nameOnDisk" : "System2_Project1",
 	"paths" : 
 	{
 		"build" : ".",
@@ -91,7 +91,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "main.cpp",
+			"path" : "Algorithms.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

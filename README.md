@@ -134,11 +134,29 @@ Divides each element of the graph by a scalar value. Division by zero throws an 
 
 **Usage:** `Graph result = graph / factor;`
 
+#### Multiplication Assignment Operator (`operator*=`)
+
+Multiplies each element of the graph by a scalar value.
+
+**Usage:** `graph *= factor;`
+
+#### Division Assignment Operator (`operator/=`)
+
+Divides each element of the graph by a scalar value. Division by zero throws an exception.
+
+**Usage:** `graph /= factor;`
+
 #### Matrix Multiplication (`operator*`)
 
 Performs matrix multiplication between two graphs. Both graphs must have the same dimensions. The diagonal will be zeros.
 
 **Usage:** `Graph result = graph1 * graph2;`
+
+#### Matrix Multiplication Assignment Operator(`operator*=`)
+
+Performs matrix multiplication between two graphs. Both graphs must have the same dimensions. The diagonal will be zeros.
+
+**Usage:** `graph1 *= graph2;`
 
 #### Comparison Operators (`operator==`, `operator!=`, `operator<`, `operator<=`, `operator>`, `operator>=`)
 
@@ -156,4 +174,11 @@ The comparison operators in this C++ graph library provide a comprehensive way t
 
 - **Greater Than or Equal To (`operator>=`)**: This operator compares two graphs to find out if one graph is larger or equal to the other. It considers both size and edges in the comparison, ensuring that the larger graph contains all edges of the smaller graph and possibly more.
 
+#### Output Stream Operator Overload (`operator<<`)
+The `operator<<` overload for the `Graph` class in C++ enables objects of the class to be output to an output stream, such as `std::cout`, using the insertion operator `<<`. This overload, implemented as a friend function of the class, grants access to the private and protected members of the class. The `operator<<` function calls the `printGraph()` member function to generate a string representation of the graph and outputs it to the specified output stream.
+
+**Usage:** `cout<<graph`
+
 In addition to the main functionalities mentioned earlier, the project includes several helper functions to support the core algorithms.
+
+In the current assignment, it is important to note that the algorithms from the previous assignment remain unchanged. The focus of this assignment primarily involved creating new graphs and conducting comparisons between them. As a result, the fundamental algorithms used for graph processing and analysis have not been altered or modified.

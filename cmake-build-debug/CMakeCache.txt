@@ -148,7 +148,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=System2_Project2
+CMAKE_PROJECT_NAME:STATIC=System2_Project1
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -214,6 +214,15 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // during the make.  This is useful for debugging only. With Visual
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
+
+//Value Computed by CMake
+System2_Project1_BINARY_DIR:STATIC=/home/parallels/CLionProjects/System2_Project2/cmake-build-debug
+
+//Value Computed by CMake
+System2_Project1_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+System2_Project1_SOURCE_DIR:STATIC=/home/parallels/CLionProjects/System2_Project2
 
 //Value Computed by CMake
 System2_Project2_BINARY_DIR:STATIC=/home/parallels/CLionProjects/System2_Project2/cmake-build-debug
