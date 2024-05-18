@@ -73,7 +73,7 @@ To clean compiled files, run the command:
 - **Load Graph**: Load a matrix to be a graph object and trows error if the matrix is not square. It will also trow error if there is an edge from a vertex to itself.
 - **Print Graph**: Return how many edges and vertexes a graph have.
 
-### Functions From Project 2 (Operators)
+### Functions For Project 2 (Operators)
 #### Addition (`operator+`)
 
 Performs element-wise addition of two graphs. Both graphs must have the same dimensions.
@@ -96,7 +96,7 @@ Returns a copy of the current graph.
 
 Increments all non-zero elements of the graph by 1.
 
-**Usage:** `++graph;`
+**Usage:** `graph++;`
 
 #### Subtraction (`operator-`)
 
@@ -120,7 +120,7 @@ Negates all elements of the graph.
 
 Decrements all non-zero elements of the graph by 1.
 
-**Usage:** `--graph;`
+**Usage:** `graph--;`
 
 #### Scalar Multiplication (`operator*`)
 

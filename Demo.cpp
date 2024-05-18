@@ -95,4 +95,10 @@ int main()
     cout<<"g7 < g8? ";
     if(g7<g8){ cout<<"yes"<<endl; }
     else{ cout<<"no"<<endl; }
+    cout<<endl;
+
+    g8++;
+    cout<<"g8++: "<<endl;
+    cout<<g8<<endl; // Should print: [0, 2, 8, 3], [2, 0, 2, 6], [3, 4, 0, 2], [0, 2, 20, 0]
+
 }

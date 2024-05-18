@@ -77,7 +77,7 @@ namespace ariel{
          *
          * @return The graph with all non-zero elements incremented by 1.
          */
-        Graph operator++();
+        Graph operator++(int);
 
         /**
          * Overload for the addition-assignment operator (+=) to add another graph to the current graph.
@@ -130,7 +130,7 @@ namespace ariel{
          *
          * @return The graph with all non-zero elements decremented by 1.
          */
-        Graph operator--();
+        Graph operator--(int);
 
         /**
          * Overload for the scalar multiplication operator (*) to multiply each element of the graph by a scalar value.

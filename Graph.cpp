@@ -144,7 +144,7 @@ Graph& Graph::operator+() {
 }
 
 // Increment by 1 for each edge that already exist
-Graph Graph::operator++() {
+Graph Graph::operator++(int) {
 
     // Perform addition per element
     for (size_t i = 0; i < matrix.size(); i++) {
@@ -210,7 +210,7 @@ Graph& Graph::operator-() {
 }
 
 // Decrement, Subtract 1 from each edge that already exist
-Graph Graph::operator--() {
+Graph Graph::operator--(int) {
 
     // Perform subtraction per element
     for (size_t i = 0; i < matrix.size(); i++) {
