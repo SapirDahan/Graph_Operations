@@ -5,7 +5,7 @@
 
 
 
-# System 2 Project 2 - Graph Operations
+# Graph Operations
 
 ## Project Description
 This C++ project provides a comprehensive set of functions for managing and manipulating graphs represented as adjacency matrices. The functions include capabilities to load graphs, calculate graph metrics, and perform arithmetic and comparison operations on graphs. The functions are designed to handle square matrices as graphs, ensuring no self-edges exist within the graph structure. The library offers a robust set of operations including addition, subtraction, multiplication (both scalar and matrix), division, and various comparison operations to facilitate extensive graph analysis and manipulation.
